@@ -1,0 +1,30 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Login | MySchool{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 450px;">
+    <h2 style="color: white; text-align: center; margin-bottom: 30px;"><i class="fas fa-sign-in-alt"></i> Login</h2>
+    <form method="POST" class="styled-form">
+        {% csrf_token %}
+        <p>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required placeholder="Enter username">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required placeholder="••••••••">
+        </p>
+        <div class="form-actions" style="justify-content: center;">
+            <button type="submit" class="btn-primary"><i class="fas fa-arrow-right"></i> Login</button>
+        </div>
+    </form>
+    <p style="text-align: center; margin-top: 20px; color: var(--text-secondary);">
+        Don't have an account? <a href="{% url 'signup' %}" style="color: var(--secondary);">Sign up</a>
+    </p>
+    {% if error %}
+        <p style="color: var(--danger); text-align: center; margin-top: 15px;">{{ error }}</p>
+    {% endif %}
+</div>
+{% endblock %}

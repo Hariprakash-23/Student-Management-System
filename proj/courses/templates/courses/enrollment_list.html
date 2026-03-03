@@ -1,0 +1,41 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Enrollments | MySchool{% endblock %}
+
+{% block content %}
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1><i class="fas fa-user-graduate"></i> Enrollments</h1>
+        <a href="{% url 'enrollment-create' %}" class="btn-primary"><i class="fas fa-plus"></i> Add Enrollment</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Enrollment Date</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in enrollments %}
+                <tr>
+                    <td>{{ e.student.Name }} ({{ e.student.Reg_no }})</td>
+                    <td>{{ e.course.code }} - {{ e.course.name }}</td>
+                    <td>{{ e.enrollment_date }}</td>
+                    <td>{{ e.grade|default:"-" }}</td>
+                    <td class="actions">
+                        <a href="{% url 'enrollment-update' e.pk %}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'enrollment-delete' e.pk %}" class="btn-icon" title="Delete"><i class="fas fa-trash"></i></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="empty-message">No enrollments found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

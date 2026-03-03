@@ -1,0 +1,20 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}{{ action }} Course | MySchool{% endblock %}
+
+{% block content %}
+    <div class="page-header" style="margin-bottom: 30px;">
+        <h1 style="color: white;"><i class="fas fa-book"></i> {{ action }} Course</h1>
+    </div>
+    <div class="form-container">
+        <form method="post" class="styled-form">
+            {% csrf_token %}
+            {{ form }}
+            <div class="form-actions">
+                <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save</button>
+                <a href="{% url 'course-list' %}" class="btn-secondary"><i class="fas fa-times"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Management{% endblock %}</title>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'students/dashboard.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="
+                    {% if user.is_authenticated %}
+                        {% if user.profile.role == 'teacher' %}
+                            {% url 'teacher-dashboard' %}
+                        {% else %}
+                            {% url 'student-dashboard' %}
+                        {% endif %}
+                    {% else %}
+                        {% url 'login' %}
+                    {% endif %}
+                ">📚 Student Management System</a>
+            </div>
+            <ul class="nav-menu">
+                {% if user.is_authenticated %}
+                    {% if user.profile.role == 'teacher' %}
+                        <li><a href="{% url 'teacher-dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="{% url 'student-list' %}"><i class="fas fa-users"></i> Students</a></li>
+                        <li><a href="{% url 'course-list' %}"><i class="fas fa-book"></i> Courses</a></li>
+                        <li><a href="{% url 'attendance-list' %}"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                        {% else %}
+                        <li><a href="{% url 'student-dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Signup</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="dashboard-container">
+        {% block content %}
+        <!-- Page-specific content goes here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; {% now "Y" %} Student Management System</p>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

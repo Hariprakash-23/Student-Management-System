@@ -1,0 +1,33 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Exams | MySchool{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="color: white;"><i class="fas fa-pencil-alt"></i> Exams</h1>
+    <a href="{% url 'exam-create' %}" class="btn-primary" ><i class="fas fa-plus"></i> Add Exam</a>
+</div>
+
+<div class="table-responsive" style="color: white;">
+    <table>
+        <thead><tr><th>Name</th><th>Course</th><th>Date</th><th>Max Marks</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for exam in exams %}
+            <tr>
+                <td style="padding: 12px 20px;">{{ exam.name }}</td>
+                <td style="padding: 12px 20px;">{{ exam.course.name }}</td>
+                <td style="padding: 12px 20px;">{{ exam.date }}</td>
+                <td style="padding: 12px 20px;">{{ exam.max_marks }}</td>
+                <td class="actions">
+                    <a href="{% url 'exam-update' exam.pk %}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'exam-delete' exam.pk %}" class="btn-icon" title="Delete"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="empty-state">No exams found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}{{ course.name }} | Course Details{% endblock %}
+
+{% block content %}
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 style="color: white;"><i class="fas fa-book"></i> {{ course.code }} - {{ course.name }}</h1>
+        <div>
+            <a href="{% url 'course-update' course.pk %}" class="btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'course-delete' course.pk %}" class="btn-primary" style="background: var(--danger);"><i class="fas fa-trash"></i> Delete</a>
+        </div>
+    </div>
+
+    <div class="profile-detail-card" style="background: var(--card-bg); border-radius: var(--border-radius); padding: 30px;color: white;">
+        <p><strong>Code:</strong> {{ course.code }}</p>
+        <p><strong>Name:</strong> {{ course.name }}</p>
+        <p><strong>Credits:</strong> {{ course.credits }}</p>
+    </div>
+
+    <div class="section-title"><i class="fas fa-users"></i> Enrolled Students</div>
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Reg No</th>
+                    <th>Name</th>
+                    <th>Enrollment Date</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrollment in course.enrollments.all %}
+                <tr>
+                    <td>{{ enrollment.student.Reg_no }}</td>
+                    <td>{{ enrollment.student.Name }}</td>
+                    <td>{{ enrollment.enrollment_date }}</td>
+                    <td>{{ enrollment.grade|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="empty-message">No students enrolled.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

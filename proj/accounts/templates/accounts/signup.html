@@ -1,0 +1,75 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Signup | MySchool{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 600px;">
+    <h2 style="color: white; text-align: center; margin-bottom: 30px;"><i class="fas fa-user-plus"></i> Signup</h2>
+    <form method="POST" enctype="multipart/form-data" class="styled-form">
+        {% csrf_token %}
+        <p>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required placeholder="Choose a username">
+        </p>
+        <p>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required placeholder="you@example.com">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required placeholder="••••••••">
+        </p>
+        <p>
+            <label for="role">Role</label>
+            <select name="role" id="role">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+        </p>
+        <div id="student-fields" style="display: block;">
+            <p>
+                <label for="reg_no">Registration Number</label>
+                <input type="text" name="reg_no" id="reg_no" placeholder="e.g., 2024CS101">
+            </p>
+            <p>
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" placeholder="Your name">
+            </p>
+            <p>
+                <label for="dob">Date of Birth</label>
+                <input type="date" name="dob" id="dob">
+            </p>
+            <p>
+                <label for="address">Address</label>
+                <textarea name="address" id="address" rows="2" placeholder="Your address"></textarea>
+            </p>
+            <p>
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" id="phone" placeholder="10-digit mobile">
+            </p>
+            <p>
+                <label for="profile_pic">Profile Picture (optional)</label>
+                <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
+            </p>
+        </div>
+        <div class="form-actions" style="justify-content: center;">
+            <button type="submit" class="btn-primary"><i class="fas fa-check"></i> Signup</button>
+        </div>
+    </form>
+    <p style="text-align: center; margin-top: 20px; color: var(--text-secondary);">
+        Already have an account? <a href="{% url 'login' %}" style="color: var(--secondary);">Login</a>
+    </p>
+    {% if error %}
+        <p style="color: var(--danger); text-align: center; margin-top: 15px;">{{ error }}</p>
+    {% endif %}
+</div>
+
+<script>
+    // Simple toggle for student fields (optional)
+    document.getElementById('role').addEventListener('change', function() {
+        var studentFields = document.getElementById('student-fields');
+        studentFields.style.display = this.value === 'student' ? 'block' : 'none';
+    });
+</script>
+{% endblock %}

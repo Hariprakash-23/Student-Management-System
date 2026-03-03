@@ -1,0 +1,19 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Delete Exam | MySchool{% endblock %}
+
+{% block content %}
+<div class="delete-confirm">
+    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #e74c3c;"></i>
+    <h2 style="color: white;">Are you sure you want to delete "{{ exam.name }}"?</h2>
+    <p class="warning">This action cannot be undone.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions" style="justify-content: center;">
+            <button type="submit" class="btn-danger"><i class="fas fa-trash"></i> Yes, delete</button>
+            <a href="{% url 'exam-list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

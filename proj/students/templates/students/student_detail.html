@@ -1,0 +1,33 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}{{ student.Name }} | Profile{% endblock %}
+
+{% block content %}
+    <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1><i class="fas fa-id-card"></i> Student Profile</h1>
+        {% if is_teacher %}
+        <div>
+            <a href="{% url 'student-update' student.Reg_no %}" class="btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'student-delete' student.Reg_no %}" class="btn-primary" style="background: var(--danger);"><i class="fas fa-trash"></i> Delete</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="profile-detail-card" style="display: flex; gap: 40px; align-items: center; background: var(--card-bg); border-radius: var(--border-radius); padding: 30px;">
+        {% if student.Profile_Pic %}
+            <img src="{{ student.Profile_Pic.url }}" alt="Profile" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary);">
+        {% else %}
+            <div style="width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(145deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+        {% endif %}
+        <div style="flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            <div class="info-item"><strong>Reg No</strong> {{ student.Reg_no }}</div>
+            <div class="info-item"><strong>Name</strong> {{ student.Name }}</div>
+            <div class="info-item"><strong>DOB</strong> {{ student.DOB }}</div>
+            <div class="info-item"><strong>Phone</strong> {{ student.Phone }}</div>
+            <div class="info-item"><strong>Address</strong> {{ student.Address }}</div>
+        </div>
+    </div>
+{% endblock %}

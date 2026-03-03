@@ -1,0 +1,35 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}Mark Attendance | MySchool{% endblock %}
+
+{% block content %}
+<h1><i class="fas fa-calendar-check"></i> Mark Attendance for {{ course.name }}</h1>
+<p>Date: {{ date }}</p>
+
+<div class="form-container" style="max-width: 800px;">
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <thead><tr><th>Student</th><th>Status</th></tr></thead>
+            <tbody>
+                {% for item in students_with_status %}
+                <tr>
+                    <td>{{ item.student.Name }} ({{ item.student.Reg_no }})</td>
+                    <td>
+                        <select name="status_{{ item.student.id }}" style="padding: 0.3rem;">
+                            <option value="present" {% if item.current_status == 'present' %}selected{% endif %}>Present</option>
+                            <option value="absent" {% if item.current_status == 'absent' %}selected{% endif %}>Absent</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="form-actions" style="justify-content: center; margin-top: 1.5rem;">
+            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Attendance</button>
+            <a href="{% url 'attendance-list' %}" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
