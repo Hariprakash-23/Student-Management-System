@@ -1,66 +1,67 @@
-Student Management System (SMS)
-A comprehensive Django-based web application for managing students, courses, attendance, and marks with role‑based access for teachers and students. The system features separate dashboards, full CRUD operations for teachers, read‑only views for students, and seamless integration with AWS S3 for attendance exports and AWS SNS for exam notifications.
+🎓 Student Management System (SMS)
+
+A comprehensive Django-based web application for managing students, courses, attendance, and marks with role‑based access for teachers and students.
+
+It includes separate dashboards, full CRUD operations for teachers, read-only views for students, and seamless integration with AWS S3 for attendance exports and AWS SNS for exam notifications.
 
 📋 Overview
+
 The Student Management System streamlines academic administration by providing:
 
-Role‑based dashboards: Teachers manage all data; students view their own records.
+🧑‍🏫 Role‑based dashboards: Teachers manage all data; students view only their records.
 
-Secure authentication: Users sign up with a role (teacher/student) and are redirected to the appropriate dashboard after login.
+🔒 Secure authentication: Sign up with a role and redirect to the appropriate dashboard.
 
-Complete student lifecycle: Add, edit, delete, and view student profiles.
+📝 Complete student lifecycle: Add, edit, delete, and view student profiles.
 
-Course & enrollment management: Create courses and enroll students.
+📚 Course & enrollment management: Create courses and enroll students.
 
-Attendance tracking: Mark attendance per course and date.
+📅 Attendance tracking: Mark attendance per course and date.
 
-Exams & marks: Schedule exams and record marks.
+🖊 Exams & marks: Schedule exams and record marks.
 
-AWS integration:
+☁️ AWS integration:
 
-Export attendance records as plain text files to Amazon S3.
+Export attendance as plain text files to Amazon S3.
 
-Send exam notifications via Amazon SNS to all enrolled students.
+Send exam notifications via Amazon SNS.
 
-REST API (optional) for programmatic access, built with Django REST Framework.
+🔗 REST API (optional) via Django REST Framework for programmatic access.
 
 ✨ Features
-For Teachers
-✅ Full CRUD on students, courses, enrollments, attendance, exams, and marks.
+🧑‍🏫 For Teachers
 
-✅ Mark attendance for a specific course and date.
-
+✅ Full CRUD operations on students, courses, enrollments, attendance, exams, and marks.
+✅ Mark attendance for specific courses and dates.
 ✅ Export attendance to AWS S3 as a downloadable .txt file.
-
-✅ Create/update exams – automatically notifies enrolled students via SNS.
-
+✅ Create/update exams – automatically notify enrolled students via SNS.
 ✅ View all records in a clean, tabular format.
 
-For Students
-👀 Read‑only access to their own profile, enrollments, attendance, and marks.
+👀 For Students
 
+👀 Read-only access to personal profile, enrollments, attendance, and marks.
 👀 View personal dashboard with aggregated information.
 
-General
-🔐 Role‑based redirection: unauthenticated users are sent to login; logged‑in users go to their respective dashboard.
+🌐 General
 
-🧠 Graceful handling of missing profiles (e.g., for superusers created via createsuperuser).
-
-☁️ Cloud‑ready AWS integrations for export and notifications.
-
+🔐 Role-based redirection: Unauthenticated users → login page; logged-in users → dashboard.
+🧠 Graceful handling of missing profiles (e.g., superusers created via createsuperuser).
+☁️ Cloud-ready AWS integrations for export and notifications.
 📡 REST API with filtering, searching, and pagination (teachers only for write operations).
 
-🛠️ Technology Stack
+🛠 Technology Stack
 Layer	Technology
 Backend	Python 3.13, Django 5.x
-Database	SQLite (default), easily switchable
+Database	SQLite (default, easily switchable)
 Frontend	HTML, CSS (simple templates)
-Authentication	Django built‑in auth + UserProfile
-API	Django REST Framework, django‑filters
+Authentication	Django built-in auth + UserProfile
+API	Django REST Framework, django-filters
 Cloud Services	AWS S3 (storage), AWS SNS (notifications)
-Other	boto3, python‑dotenv (optional)
+Other	boto3, python-dotenv 
+
+
 📁 Project Structure
-text
+
 student_management/
 ├── manage.py
 ├── db.sqlite3
@@ -72,138 +73,89 @@ student_management/
 │   ├── models.py (UserProfile)
 │   ├── views.py (signup, login, logout)
 │   └── templates/accounts/
-├── students/                      # Student management
+├── students/                     # Student management
 │   ├── models.py (Student)
 │   ├── views.py (dashboards & CRUD)
 │   └── templates/students/
-├── courses/                        # Courses & enrollments
+├── courses/                      # Courses & enrollments
 │   ├── models.py (Course, Enrollment)
 │   └── views.py
-├── attendance/                     # Attendance tracking
+├── attendance/                   # Attendance tracking
 │   ├── models.py (Attendance)
 │   ├── views.py (including AWS S3 export)
 │   └── templates/attendance/
-├── marks/                           # Exams & marks
+├── marks/                         # Exams & marks
 │   ├── models.py (Exam, Marks)
 │   ├── views.py (including AWS SNS notifications)
 │   └── templates/marks/
-├── api/                              # REST API
+├── api/                           # REST API
 │   ├── serializers.py
 │   ├── views.py (ViewSets)
 │   ├── permissions.py
 │   └── urls.py
 └── requirements.txt
-🚀 Getting Started
-Prerequisites
-Python 3.10+
 
-pip
-
-(Optional) AWS account for S3 and SNS features
-
-Installation
-Clone the repository
-
-bash
-git clone https://github.com/yourusername/student-management-system.git
-cd student-management-system
-Create and activate a virtual environment
-
-bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
-
-bash
-pip install -r requirements.txt
-Apply migrations
-
-bash
-python manage.py makemigrations accounts students courses attendance marks api
-python manage.py migrate
-Create a superuser (optional)
-
-bash
-python manage.py createsuperuser
-Note: Superusers created this way won't have a UserProfile. Either create one via the admin panel or use the signup form.
-
-Configure AWS settings (if using S3/SNS)
-
-Edit student_management/settings.py and add your AWS credentials and bucket/topic ARNs:
-
-python
-AWS_ACCESS_KEY_ID = "your-access-key"
-AWS_SECRET_ACCESS_KEY = "your-secret-key"
-AWS_STORAGE_BUCKET_NAME = "your-bucket-name"
-AWS_S3_REGION_NAME = "ap-south-1"   # e.g., us-east-1
-AWS_SNS_TOPIC_ARN = "arn:aws:sns:region:account-id:topic-name"
-Run the development server
-
-bash
-python manage.py runserver
-Access the application at http://127.0.0.1:8000/ – you'll be redirected to the login page.
 
 ☁️ AWS Integration Details
-Attendance Export to S3
-When a teacher clicks "Export Attendance to AWS S3", the app:
+📤 Attendance Export to S3
 
-Fetches all attendance records.
-Converts them into a plain text file with a timestamp.
-Uploads the file to the configured S3 bucket.
-Returns a direct download link to the file.
-Bucket must be publicly readable (or use pre‑signed URLs – extend as needed).
+Teacher clicks "Export Attendance to AWS S3"
 
-Exam Notifications via SNS
-On creating or updating an exam, the system:
+App fetches records → converts to .txt with timestamp → uploads to S3 → provides download link
 
-Finds all students enrolled in that course.
-Retrieves their email addresses.
-Publishes a message to the SNS topic.
-All subscribed email addresses receive the notification.
-Important: Student email addresses must be subscribed and confirmed in the SNS topic. You can do this manually in the AWS Console or automate it during signup.
+Bucket must be publicly readable or use pre-signed URLs.
+
+📩 Exam Notifications via SNS
+
+Creating/updating an exam:
+
+Finds enrolled students
+
+Retrieves their emails
+
+Publishes a message to SNS topic
+
+Subscribed emails receive notifications
+
+Student emails must be confirmed in SNS (manual or automated during signup).
 
 📱 Usage
 Sign Up
-Visit /accounts/signup/ and choose a role (Teacher or Student).
 
-After signup, you can log in.
+Visit /accounts/signup/ → choose role (Teacher/Student)
+
+Log in with credentials
 
 Login & Redirection
-Unauthenticated users are redirected to /accounts/login/.
 
-Upon successful login, users are sent to their role‑specific dashboard:
+Unauthenticated users → /accounts/login/
 
-Teacher: /students/teacher/dashboard/
+Teachers → /students/teacher/dashboard/
 
-Student: /students/student/dashboard/
+Students → /students/student/dashboard/
 
 Teacher Dashboard
-Manage Students: list, add, edit, delete, view details.
 
-Manage Courses: create, update, delete.
+Manage Students, Courses, Enrollments
 
-Manage Enrollments: enroll students in courses.
+Mark attendance & export to S3
 
-Manage Attendance: mark attendance per course, edit/delete records, export to S3.
+Schedule Exams → automatic SNS notifications
 
-Manage Exams: schedule exams – automatic SNS notifications.
-
-Manage Marks: record marks for each student/exam.
+Record Marks for each student
 
 Student Dashboard
-View personal profile (roll number, DOB, phone, address, photo).
 
-View list of enrolled courses.
-
-View attendance records (read‑only).
-
-View marks obtained in exams.
+View profile, enrolled courses, attendance, and marks (read-only)
 
 REST API
-Available at /api/ (requires authentication).
 
-Endpoints: /api/students/, /api/courses/, /api/enrollments/, /api/attendance/, /api/exams/, /api/marks/.
+Base: /api/ (authentication required)
 
-Teachers have full read/write access; students have read‑only access to their own data.
+Endpoints: /api/students/, /api/courses/, /api/enrollments/, /api/attendance/, /api/exams/, /api/marks/
 
-Supports filtering, searching, ordering, and pagination.
+Teachers: full read/write
+
+Students: read-only own data
+
+Supports filtering, searching, ordering, pagination
