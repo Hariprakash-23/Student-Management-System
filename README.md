@@ -1,4 +1,5 @@
-Student Management System (SMS)
+Student Management System (SMS):
+
 A comprehensive Django-based web application for managing students, courses, attendance, and marks with role‑based access for teachers and students. The system features separate dashboards, full CRUD operations for teachers, read‑only views for students, and seamless integration with AWS S3 for attendance exports and AWS SNS for exam notifications.
 
 Overview
